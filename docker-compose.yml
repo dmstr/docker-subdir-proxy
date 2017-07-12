@@ -1,0 +1,13 @@
+version: '2'
+services:
+  proxy:
+    command: sh -c "cp /var/www/html-dist/robots.txt /var/www/html/robots.txt && docker-php-entrypoint apache2-foreground"
+    build: .
+    environment:
+      - PROXY_PASS=/example
+      - PROXY_PASS_REVERSE=/example/
+      - PROXY_BACKEND_URL=http://backend
+    ports:
+      - 80
+  backend:
+    image: dmstr/yii2-app
